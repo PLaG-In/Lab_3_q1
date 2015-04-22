@@ -6,7 +6,7 @@
 #include "stdafx.h"
 #include "../CCarProject/CCarSet.h"
 
-struct TVSetFixture
+struct CarSetFixture
 {
 	CCarSet car;
 };
@@ -20,7 +20,7 @@ struct TVSetFixture
 - при первом включении двигатель включается на первом канале
 - позволяет установить скорость от 0 до 150, когда двигатель включен
 */
-BOOST_FIXTURE_TEST_SUITE(TVSet, TVSetFixture)
+BOOST_FIXTURE_TEST_SUITE(CarSet, CarSetFixture)
 
 BOOST_AUTO_TEST_CASE(TurnedOffByDefault)
 {
@@ -54,18 +54,18 @@ BOOST_AUTO_TEST_CASE(InitiallyIsTurnedOnAtChannel1)
 	BOOST_CHECK_EQUAL(car.GetSpeed(), 1);
 }
 
-BOOST_AUTO_TEST_CASE(CanSelectChannelFrom1To99WhenIsOn)
+BOOST_AUTO_TEST_CASE(CanSelectSpeedFrom1To150WhenIsOn)
 {
 	car.TurnOnEngine();
 
 	BOOST_CHECK(!car.SetSpeed(0));
 	BOOST_CHECK_EQUAL(car.GetSpeed(), 1);
 
-	BOOST_CHECK(car.SetSpeed(99));
-	BOOST_CHECK_EQUAL(car.GetSpeed(), 99);
+	BOOST_CHECK(car.SetSpeed(150));
+	BOOST_CHECK_EQUAL(car.GetSpeed(), 150);
 
-	BOOST_CHECK(!car.SetSpeed(100));
-	BOOST_CHECK_EQUAL(car.GetSpeed(), 99);
+	BOOST_CHECK(!car.SetSpeed(151));
+	BOOST_CHECK_EQUAL(car.GetSpeed(), 150);
 
 	BOOST_CHECK(car.SetSpeed(1));
 	BOOST_CHECK_EQUAL(car.GetSpeed(), 1);
