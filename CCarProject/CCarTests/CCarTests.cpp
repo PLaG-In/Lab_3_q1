@@ -35,40 +35,61 @@ BOOST_AUTO_TEST_CASE(CanBeTurnedOn)
 
 BOOST_AUTO_TEST_CASE(CanBeTurnedOff)
 {
-	car.TurnOnEngine();
+	BOOST_CHECK(car.TurnOnEngine());
 	BOOST_CHECK(car.TurnOffEngine());
 	BOOST_CHECK(!car.EngineIsTurnedOn());
 }
 
-BOOST_AUTO_TEST_CASE(IsAtChannel0WhenTurnedOff)
+BOOST_AUTO_TEST_CASE(GearSpeedAndDirectionByDefault)
 {
+	BOOST_CHECK(car.TurnOnEngine());
+	BOOST_CHECK_EQUAL(car.GetGear(), 0);
 	BOOST_CHECK_EQUAL(car.GetSpeed(), 0);
+	BOOST_CHECK_EQUAL(car.GetDirection(), CCarSet::STAND);
+}
+
+BOOST_AUTO_TEST_CASE(CantBeTurnedOnTwice)
+{
+	car.TurnOnEngine();
+	BOOST_CHECK(car.TurnOnEngine());
+}
+
+BOOST_AUTO_TEST_CASE(CantBeTurnedOffTwice)
+{
 	car.TurnOnEngine();
 	car.TurnOffEngine();
-	BOOST_CHECK_EQUAL(car.GetSpeed(), 0);
+	BOOST_CHECK(car.TurnOffEngine());
 }
 
-BOOST_AUTO_TEST_CASE(InitiallyIsTurnedOnAtChannel1)
+BOOST_AUTO_TEST_CASE(CanMoveBackwards)
 {
-	car.TurnOnEngine();
-	BOOST_CHECK_EQUAL(car.GetSpeed(), 1);
+	BOOST_CHECK(car.TurnOnEngine());
+	BOOST_CHECK(car.SetGear(0));
+	BOOST_CHECK(!car.SetSpeed(20));
+
+	BOOST_CHECK(car.SetGear(-1));
+	BOOST_CHECK(!car.SetSpeed(21));
+	BOOST_CHECK(car.SetSpeed(20));
+	BOOST_CHECK(car.GetDirection() == CCarSet::BACK);
 }
 
-BOOST_AUTO_TEST_CASE(CanSelectSpeedFrom1To150WhenIsOn)
+BOOST_AUTO_TEST_CASE(CanMoveStraight)
 {
-	car.TurnOnEngine();
+	BOOST_CHECK(!car.SetGear(1));
 
-	BOOST_CHECK(!car.SetSpeed(0));
-	BOOST_CHECK_EQUAL(car.GetSpeed(), 1);
+	BOOST_CHECK(car.TurnOnEngine());
+	BOOST_CHECK(car.SetGear(1));
+	BOOST_CHECK(car.SetSpeed(30));
+	BOOST_CHECK(car.GetDirection() == CCarSet::STRAIGHT);
 
-	BOOST_CHECK(car.SetSpeed(150));
-	BOOST_CHECK_EQUAL(car.GetSpeed(), 150);
-
-	BOOST_CHECK(!car.SetSpeed(151));
-	BOOST_CHECK_EQUAL(car.GetSpeed(), 150);
-
-	BOOST_CHECK(car.SetSpeed(1));
-	BOOST_CHECK_EQUAL(car.GetSpeed(), 1);
+	BOOST_CHECK(car.SetGear(4));
+	BOOST_CHECK(car.SetSpeed(90));
+	BOOST_CHECK(car.GetDirection() == CCarSet::STRAIGHT);
 }
 
+BOOST_AUTO_TEST_CASE(NeutralGearSetsWhenEngineTurnedOff)
+{
+	car.TurnOffEngine();
+	BOOST_CHECK(car.SetGear(0));
+}
 BOOST_AUTO_TEST_SUITE_END()

@@ -4,12 +4,13 @@ class CCarSet
 {
 public:
 	CCarSet();
+	~CCarSet();
 
 	enum direction
 	{
-		BACKWARD,
+		BACK,
 		STAND,
-		FORWARD
+		STRAIGHT
 	};
 
 	bool EngineIsTurnedOn() const;
@@ -18,6 +19,7 @@ public:
 	bool TurnOnEngine();
 	bool TurnOffEngine();
 	bool SetGear(int gear);
+	direction GetDirection() const;
 	bool SetSpeed(int speed);
 private:
 	struct range
