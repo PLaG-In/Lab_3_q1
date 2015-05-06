@@ -1,12 +1,12 @@
 #pragma once
 
-class CCarSet
+class CCar
 {
 public:
-	CCarSet();
-	~CCarSet();
+	CCar();
+	~CCar();
 
-	enum direction
+	enum Direction
 	{
 		BACK,
 		STAND,
@@ -19,18 +19,24 @@ public:
 	bool TurnOnEngine();
 	bool TurnOffEngine();
 	bool SetGear(int gear);
-	direction GetDirection() const;
+	Direction GetDirection() const;
 	bool SetSpeed(int speed);
 private:
-	struct range
+	struct Range
 	{
 		int min;
 		int max;
 	};
-	static range m_gearSpeedRange[];
+	int maxSpeed = 150;
+	int minSpeed = 0;
+	int maxGear = 5;
+	int revGear = -1;
+	int neutralGear = 0;
+	int firstGear = 1;
+	static Range m_gearSpeedRange[];
 	bool m_engineIsTurnedOn;
 	int m_speed;
-	direction m_direction;
+	Direction m_direction;
 	int m_gear;
 };
 

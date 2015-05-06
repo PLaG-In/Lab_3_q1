@@ -2,7 +2,7 @@
 //
 
 #include "stdafx.h"
-#include "CCarSet.h"
+#include "CCar.h"
 
 using namespace std;
 
@@ -14,7 +14,7 @@ int StringToInt(const char *str, bool &err)
 	return param;
 }
 
-void PrintInfo(CCarSet &const car)
+void PrintInfo(CCar &const car)
 {
 	int speed = car.GetSpeed();
 	int gear = car.GetGear();
@@ -28,11 +28,11 @@ void PrintInfo(CCarSet &const car)
 		cout << "Engine turned off\n";
 	}
 
-	if (car.GetDirection() == CCarSet::STAND)
+	if (car.GetDirection() == CCar::STAND)
 	{
 		cout << "The car is standing\n";
 	}
-	else if (car.GetDirection() == CCarSet::STRAIGHT)
+	else if (car.GetDirection() == CCar::STRAIGHT)
 	{
 		cout << "The car goes forward\n";
 	}
@@ -45,7 +45,7 @@ void PrintInfo(CCarSet &const car)
 	cout << "Current gear : " << gear << endl;
 }
 
-void ChooseCommand(string &const command, CCarSet & car)
+void ChooseCommand(string &const command, CCar & car)
 {
 	if (command == "Info")
 	{
@@ -135,7 +135,7 @@ void ChooseCommand(string &const command, CCarSet & car)
 
 int main(int argc, char* argv[])
 {
-	CCarSet car;
+	CCar car;
 	string command;
 	cout << "Available commands:Info, EngineOn, EngineOff, SetSpeed <speed>, SetGear <gear>.\n";
 	cout << "Command: ";

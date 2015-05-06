@@ -4,11 +4,11 @@
 #include "stdafx.h"
 
 #include "stdafx.h"
-#include "../CCarProject/CCarSet.h"
+#include "../CCarProject/CCar.h"
 
 struct CarSetFixture
 {
-	CCarSet car;
+	CCar car;
 };
 
 /*
@@ -45,7 +45,7 @@ BOOST_AUTO_TEST_CASE(GearSpeedAndDirectionByDefault)
 	BOOST_CHECK(car.TurnOnEngine());
 	BOOST_CHECK_EQUAL(car.GetGear(), 0);
 	BOOST_CHECK_EQUAL(car.GetSpeed(), 0);
-	BOOST_CHECK_EQUAL(car.GetDirection(), CCarSet::STAND);
+	BOOST_CHECK_EQUAL(car.GetDirection(), CCar::STAND);
 }
 
 BOOST_AUTO_TEST_CASE(CantBeTurnedOnTwice)
@@ -70,7 +70,7 @@ BOOST_AUTO_TEST_CASE(CanMoveBackwards)
 	BOOST_CHECK(car.SetGear(-1));
 	BOOST_CHECK(!car.SetSpeed(21));
 	BOOST_CHECK(car.SetSpeed(20));
-	BOOST_CHECK(car.GetDirection() == CCarSet::BACK);
+	BOOST_CHECK(car.GetDirection() == CCar::BACK);
 }
 
 BOOST_AUTO_TEST_CASE(CanMoveStraight)
@@ -80,11 +80,11 @@ BOOST_AUTO_TEST_CASE(CanMoveStraight)
 	BOOST_CHECK(car.TurnOnEngine());
 	BOOST_CHECK(car.SetGear(1));
 	BOOST_CHECK(car.SetSpeed(30));
-	BOOST_CHECK(car.GetDirection() == CCarSet::STRAIGHT);
+	BOOST_CHECK(car.GetDirection() == CCar::STRAIGHT);
 
 	BOOST_CHECK(car.SetGear(4));
 	BOOST_CHECK(car.SetSpeed(90));
-	BOOST_CHECK(car.GetDirection() == CCarSet::STRAIGHT);
+	BOOST_CHECK(car.GetDirection() == CCar::STRAIGHT);
 }
 
 BOOST_AUTO_TEST_CASE(NeutralGearSetsWhenEngineTurnedOff)
